@@ -4,7 +4,7 @@ from shutil import copyfile
 import os
 
 nome = input("Digite o nome do arquivo:")
-global name
+
 def renomearArquivo(nome):
     if exists(nome):
         print("Arquivo existe")
@@ -22,18 +22,17 @@ def renomearArquivo(nome):
 
 juntar = renomearArquivo(nome)
 print(juntar)
-campos = ["assunto", "tipos_de_normas", "numero_data", "orgao", "ementa", "download"]
-respotas = [input("Digite o assunto: "), 
-            input("Digite o tipo de norma: "), 
-            input("Digite o numero e data: "), 
-            input("Digite o orgao: "), 
-            input("Digite a ementa: "), 
-            ("Digite o link do download:" , {juntar})]
-resultado = "array(\n"           
+
+campos = ["array(\n" + "    "+"\"" + "assunto"+ "\"" +"=>" + "\"" + input("Digite o assunto: ") +"\"" + "," ,
+ "    " + "\"" + "tipos_de_normas"+ "\"" +"=>" + "\"" + input("Digite o tipo de norma: ") +"\"" + "," ,
+ "    " + "\"" + "numero_data"+ "\"" +"=>" + "\"" + input("Digite o numero e data: ") +"\"" + "," ,
+ "    " + "\"" + "orgao"+ "\"" +"=>" + "\"" + input("Digite o orgao: ") +"\"" + "," ,
+ "    " +  "\"" + "ementa"+ "\"" +"=>" + "\"" + input("Digite a ementa: ") +"\"" + "," ,
+ "    " +   "\"" + "download"+ "\"" +"=>" + "\"" + juntar +"\"" + "\n" + ")" + ","]
+
 for i in range(len(campos)):
-    resultado +=  "\"" + campos[i] + "\"" + "=> " + "\"" , respotas[i] + "\"" + ",\n"
-resultado += ")"
-print(resultado)
+    print(campos[i]) 
+
 
 try :
     if(juntar != None):
@@ -42,14 +41,3 @@ try :
         print("Arquivo copiado")
 except ValueError: 
         print("Erro ao copiar o arquivo")
-
-
-
-
-            
-
-
-
-
-
-#DECRETO Nº 2277 DE 6 DE MAIO DE 2022.pdf
