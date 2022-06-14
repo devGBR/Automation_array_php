@@ -1,21 +1,82 @@
+from PySimpleGUI import PySimpleGUI as sg
+from dataclasses import replace
+from os.path import exists
+import shutil
+import os
+diretorio = os.getcwd()
+#Layout:
+sg.theme('Dark Blue')
+layout = [
+    [sg.Text("Nome do arquivo:")],
+    [sg.InputText(key='nome', size=(30,1)), sg.FileBrowse(initial_folder = diretorio),],
+    [sg.Text("Nome do arquivo:")],
+    [sg.InputText(key='arquivo', size=(30,1))],
+    [sg.Text("Assunto: ")],
+    [sg.Input(key='assunto', size=(30,1))],
+    [sg.Text("norma: ")], 
+    [sg.Input(key='tipo', size=(30,1))],
+    [sg.Text("numero e data: ")],
+    [sg.Input(key='data', size=(30,1))],
+    [sg.Text("orgão: ")],
+    [sg.Input(key='orgao', size=(30,1))],
+    [sg.Text("ementa: ")],
+    [sg.Input(key='ementa', size=(30,1))],
+    [sg.Button("Selecionar"), sg.Button("Visualizar")]
+]
 
-# tipos =input("Digite o tipo de norma: ") 
-# data = input("Digite o numero e data: ") 
-# orgao = input("Digite o orgao: ")
-# ementa = input("Digite a ementa: ")
-# download = input("Digite o link do download: ")
-
-
-
-
-
-campos = ["array(\n" + "    "+"\"" + "assunto"+ "\"" +"=>" + "\"" + input("Digite o assunto: ") +"\"" + "," ,
- "    " + "\"" + "tipos_de_normas"+ "\"" +"=>" + "\"" + input("Digite o tipo de norma: ") +"\"" + "," ,
- "    " + "\"" + "numero_data"+ "\"" +"=>" + "\"" + input("Digite o numero e data: ") +"\"" + "," ,
- "    " + "\"" + "orgao"+ "\"" +"=>" + "\"" + input("Digite o orgao: ") +"\"" + "," ,
- "    " +  "\"" + "ementa"+ "\"" +"=>" + "\"" + input("Digite a ementa: ") +"\"" + "," ,
- "    " +   "\"" + "download"+ "\"" +"=>" + "\"" + input("Digite o link do download: ") +"\"" + "\n" + ")" + ","]
-
-for i in range(len(campos)):
-    print(campos[i]) 
-
+#Janela:
+janela = sg.Window("Criador de array", layout)
+#Eventos:
+while True: 
+    event, values = janela.read()
+    if event == sg.WINDOW_CLOSED:
+        break
+    if event == 'Selecionar':
+        nome = values['nome']
+        arquivo = values['arquivo']
+        assunto = values['assunto']
+        tipo = values['tipo']
+        data = values['data']
+        orgao = values['orgao']
+        ementa = values['ementa']
+        sg.popup(nome)
+        if nome == '':
+            sg.popup('Preencha o nome do arquivo!')
+        else:
+            if exists(nome):
+                remove = arquivo[:-4]
+                substituir = remove.replace(" ", "_")
+                substituir1 = substituir.replace(",", "")
+                substituir2 = substituir1.replace("º", "")
+                form = substituir2.replace(".", "")
+                result = form.upper()
+                name = result + ".pdf" 
+            if(name != None):
+               juntar = name
+               campos = ["array(\n" + "    "+"\"" + "assunto"+ "\"" +"=>" + "\"" + assunto +"\"" + "," 
+               ,"    " + "\"" + "tipos_de_normas"+ "\"" +"=>" + "\"" + tipo +"\"" + "," 
+               ,"    " + "\"" + "numero_data"+ "\"" +"=>" + "\"" + data +"\"" + "," 
+               ,"    " + "\"" + "orgao"+ "\"" +"=>" + "\"" + orgao +"\"" + "," 
+               ,"    " + "\"" + "ementa"+ "\"" +"=>" + "\"" + ementa +"\"" + "," 
+               ,"    " + "\"" + "Download"+ "\"" +"=>" + "\"" + juntar +"\"" + ")" + ","]
+               for i in range(len(campos)):
+                result = campos[i]
+                sg.popup(result)
+            if(name != ''):
+                sg.popup(name)
+                shutil.copyfile(nome, name)
+                os.remove(nome)
+                sg.popup("Arquivo criado com sucesso!")
+            else:
+                print("Preencha o nome do arquivo!")
+           
+              
+            # if(name != None):
+                #     juntar = renomearArquivo(nome)
+                #     campos = ["array(\n" + "    "+"\"" + "assunto"+ "\"" +"=>" + "\"" + assunto +"\"" + "," ,"    " + "\"" + "tipos_de_normas"+ "\"" +"=>" + "\"" + tipo +"\"" + "," ,"    " + "\"" + "numero_data"+ "\"" +"=>" + "\"" + data +"\"" + "," ,"    " + "\"" + "orgao"+ "\"" +"=>" + "\"" + orgao +"\"" + "," ,"    " + "\"" + "ementa"+ "\"" +"=>" + "\"" + ementa +"\"" + "," ,"    " + "\"" + "Download"+ "\"" +"=>" + "\"" + juntar +"\"" + ","]
+                #     with open("array.txt", "a") as f:
+                #         f.writelines(campos)
+                #     f.close()
+                #     sg.popup("Arquivo criado com sucesso!")
+                #     janela.close()
+            break

@@ -1,20 +1,11 @@
-
-from kivy.uix.button import Button
+from genericpath import exists
 from kivy.app import App
-from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 
-
-GUI = Builder.load_file('tela.kv')
-
-class Meuapp(App):
-    def build(self):
-        return GUI
-    def boxlayout(self):
-            return BoxLayout()
-    
-    def renomearArquivo(nome):
-        if exists(nome):
+class incrementar(BoxLayout):
+    pass
+    def select(self):
+         if exists(self.ids.nome.text):
             print("Arquivo existe")
             remove = nome[:-4]
             substituir = remove.replace(" ", "_")
@@ -23,9 +14,17 @@ class Meuapp(App):
             form = substituir2.replace(".", "")
             result = form.upper()
             name = result + ".pdf"
+            print(name)
             return name
-
+    def view_file(self):
+        if exists(self.ids.nome.text):
+            print("Arquivo existe")
+            print(self.ids.nome.text)
+            return self.ids.nome.text
         else:
             print("Arquivo não encontrado")
-
-Meuapp().run()
+class teste(App):
+    def build(self):
+        return incrementar()
+    
+teste().run()
