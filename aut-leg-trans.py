@@ -3,6 +3,7 @@ from dataclasses import replace
 from os.path import exists
 import shutil
 import os
+import pyperclip as pc 
 diretorio = os.getcwd()
 #Layout:
 sg.theme('Dark Blue')
@@ -53,15 +54,24 @@ while True:
                 name = result + ".pdf" 
             if(name != None):
                juntar = name
-               campos = ["array(\n" + "    "+"\"" + "assunto"+ "\"" +"=>" + "\"" + assunto +"\"" + "," 
-               ,"    " + "\"" + "tipos_de_normas"+ "\"" +"=>" + "\"" + tipo +"\"" + "," 
-               ,"    " + "\"" + "numero_data"+ "\"" +"=>" + "\"" + data +"\"" + "," 
-               ,"    " + "\"" + "orgao"+ "\"" +"=>" + "\"" + orgao +"\"" + "," 
-               ,"    " + "\"" + "ementa"+ "\"" +"=>" + "\"" + ementa +"\"" + "," 
-               ,"    " + "\"" + "Download"+ "\"" +"=>" + "\"" + juntar +"\"" + ")" + ","]
-               for i in range(len(campos)):
-                result = campos[i]
-                sg.popup(result)
+               campos = "array(\n" + "    "+"\"" + "assunto"+ "\"" +"=>" + "\"" + assunto +"\"" + "," + "\n" + "    " + "\"" + "tipos_de_normas"+ "\"" +"=>" + "\"" + tipo +"\"" + "," + "\n" + "    " + "\"" + "numero_data"+ "\"" +"=>" + "\"" + data +"\"" + "," +"\n" + "    " + "\"" + "orgao"+ "\"" +"=>" + "\"" + orgao +"\"" + ","  + "\n" + "    " + "\"" + "ementa"+ "\"" +"=>" + "\"" + ementa +"\"" + "," + "\n" + "    " + "\"" + "Download"+ "\"" +"=>" + "\"" + juntar +"\"" + ")" + ","
+               sg.popup(campos)
+               if (campos != None):
+                layout2 = [
+                    [sg.Text("Copiar array?")],
+                    [sg.Button("Sim"), sg.Button("Não")]]
+
+                janela2 = sg.Window("Janela", layout2)
+
+                while True: 
+                    event , values = janela2.read()
+                    if event == 'Sim':
+                        pc.copy(campos)
+                        sg.popup("Copiado para a area de trabalho!")
+                    if event == 'Não':
+                        sg.popup("Não copiado!")
+                        sg.WINDOW_CLOSED
+                    break
             if(name != ''):
                 sg.popup(name)
                 shutil.copyfile(nome, name)
