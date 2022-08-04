@@ -1,7 +1,15 @@
-#Pyth if(nome != ''):
-                sg.popup(sg.Text("Assunto: "), sg.Input(key='assunto'),
-                sg.Text("Digite o tipo de norma: "), sg.Input(key='tipo'),
-                sg.Text("Digite o numero e data: "), sg.Input(key='data'),
-                sg.Text("Digite o orgão: "), sg.Input(key='orgao'),
-                sg.Text("Digite a ementa: "), sg.Input(key='ementa'))
-            else:
+ Este é um Programa criar array para php em python.
+ -----------
+ 
+*Funções* 
+ 
+ 1. Renomeação de arquivo
+ 
+ 2. Cria um array com informações para scripts php
+ 
+ ----------------
+ 
+ Fiz ele a nivel de usuario e para ser usado pelo terminal.
+ 
+ Fiz tambem um executavel caso queiram testar.
+ 
